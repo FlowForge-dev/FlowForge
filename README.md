@@ -83,6 +83,13 @@ $env:OPENAI_API_KEY = "sk-..."
 forge provider test openai
 ```
 
+OpenRouter:
+
+```powershell
+forge provider configure openrouter --api-key "sk-or-..." --model "minimax/minimax-m2.5:free"
+forge provider test openrouter
+```
+
 ## First 5 Commands
 
 Memorize these:

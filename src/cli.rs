@@ -86,6 +86,17 @@ pub enum ProviderCommand {
         #[arg(short, long)]
         model: Option<String>,
     },
+    Configure {
+        provider: String,
+        #[arg(long)]
+        api_key: Option<String>,
+        #[arg(long)]
+        api_key_env: Option<String>,
+        #[arg(short, long)]
+        model: Option<String>,
+        #[arg(long)]
+        endpoint: Option<String>,
+    },
     List,
     Test {
         provider: Option<String>,

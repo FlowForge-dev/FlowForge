@@ -23,6 +23,7 @@ First public preview.
 - Beginner install scripts.
 - First run creates config and standard folders automatically.
 - Beginner config commands: `forge config open`, `forge config path`, `forge config show`, and `forge config reset`.
+- Beginner provider setup with `forge provider configure`.
 - Knowledge extraction pattern pack.
 - Demo workflows for knowledge, study, decisions, and content.
 

@@ -44,4 +44,4 @@ catch {
 Write-Host ""
 Write-Host "Installed forge."
 Write-Host "Starter files were created automatically in ~/.forgeflow."
-Write-Host "Next: set your API key, then run: forge provider test openai"
+Write-Host "Next: run forge config open or forge provider configure openrouter --api-key `"sk-or-...`" --model `"minimax/minimax-m2.5:free`""

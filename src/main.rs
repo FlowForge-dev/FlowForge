@@ -95,7 +95,7 @@ fn handle_config(command: ConfigCommand, config: &ForgeConfig) -> Result<()> {
     match command {
         ConfigCommand::Open => open_config_file()?,
         ConfigCommand::Path => println!("{}", config::config_path()?.display()),
-        ConfigCommand::Show => println!("{}", toml::to_string_pretty(config)?),
+        ConfigCommand::Show => println!("{}", toml::to_string_pretty(&redacted_config(config))?),
         ConfigCommand::Reset => {
             ForgeConfig::default().save()?;
             success("Reset config");
@@ -147,6 +147,23 @@ async fn handle_provider(
             config.save()?;
             success(&format!("Provider set to {provider}"));
         }
+        ProviderCommand::Configure {
+            provider,
+            api_key,
+            api_key_env,
+            model,
+            endpoint,
+        } => {
+            configure_provider(
+                config,
+                providers,
+                provider,
+                api_key,
+                api_key_env,
+                model,
+                endpoint,
+            )?;
+        }
         ProviderCommand::List => {
             providers.print_supported(config);
             providers.print_health(None, config).await?;
@@ -162,6 +179,74 @@ async fn handle_provider(
         }
     }
     Ok(())
+}
+
+fn configure_provider(
+    config: &mut ForgeConfig,
+    providers: &ProviderRegistry,
+    provider: String,
+    api_key: Option<String>,
+    api_key_env: Option<String>,
+    model: Option<String>,
+    endpoint: Option<String>,
+) -> Result<()> {
+    use anyhow::bail;
+
+    providers.ensure_supported(&provider)?;
+    if api_key.is_some() && api_key_env.is_some() {
+        bail!("use either --api-key or --api-key-env, not both");
+    }
+
+    config.provider = provider.clone();
+    if let Some(model) = model {
+        config.model = model.clone();
+        config.providers.entry(provider.clone()).or_default().model = Some(model);
+    }
+
+    let provider_config = config.providers.entry(provider.clone()).or_default();
+    if let Some(api_key) = api_key {
+        provider_config.api_key = Some(api_key);
+        provider_config.api_key_env = None;
+    }
+    if let Some(api_key_env) = api_key_env {
+        provider_config.api_key = None;
+        provider_config.api_key_env = Some(api_key_env);
+    }
+    if let Some(endpoint) = endpoint {
+        provider_config.endpoint = Some(endpoint);
+    }
+
+    config.save()?;
+    success(&format!("Configured provider {provider}"));
+    info(&format!("Next: forge provider test {provider}"));
+    Ok(())
+}
+
+fn redacted_config(config: &ForgeConfig) -> ForgeConfig {
+    let mut redacted = config.clone();
+    for provider in redacted.providers.values_mut() {
+        if provider.api_key.is_some() {
+            provider.api_key = Some("<redacted>".to_string());
+        }
+        if let Some(value) = &provider.api_key_env {
+            if looks_like_secret(value) {
+                provider.api_key_env = Some("<redacted>".to_string());
+            }
+        }
+    }
+    redacted
+}
+
+fn looks_like_secret(value: &str) -> bool {
+    let trimmed = value.trim();
+    trimmed.starts_with("sk-")
+        || trimmed.starts_with("sk_or_")
+        || trimmed.starts_with("sk-or-")
+        || trimmed.starts_with("AIza")
+        || (trimmed.len() > 40
+            && trimmed
+                .chars()
+                .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_'))
 }
 
 async fn chat(config: &ForgeConfig, providers: &ProviderRegistry) -> Result<()> {

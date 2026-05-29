@@ -61,6 +61,52 @@ fn config_show_prints_toml() {
 }
 
 #[test]
+fn provider_configure_openrouter_sets_key_and_model() {
+    let home = tempdir().unwrap();
+    forge(home.path())
+        .arg("provider")
+        .arg("configure")
+        .arg("openrouter")
+        .arg("--api-key")
+        .arg("sk-or-test-secret")
+        .arg("--model")
+        .arg("minimax/minimax-m2.5:free")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("Configured provider openrouter"));
+
+    forge(home.path())
+        .arg("provider")
+        .arg("info")
+        .arg("openrouter")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("minimax/minimax-m2.5:free"))
+        .stdout(predicate::str::contains("api_key     yes"));
+}
+
+#[test]
+fn config_show_redacts_direct_api_keys() {
+    let home = tempdir().unwrap();
+    forge(home.path())
+        .arg("provider")
+        .arg("configure")
+        .arg("openrouter")
+        .arg("--api-key")
+        .arg("sk-or-test-secret")
+        .assert()
+        .success();
+
+    forge(home.path())
+        .arg("config")
+        .arg("show")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("sk-or-test-secret").not())
+        .stdout(predicate::str::contains("<redacted>"));
+}
+
+#[test]
 fn shell_tool_requires_explicit_opt_in() {
     let home = tempdir().unwrap();
     forge(home.path())
