@@ -98,6 +98,14 @@ Planner -> Coder -> Tester -> Reviewer
 Created automatically on first run:
 
 ```text
+Windows:
+C:\Users\<you>\.forgeflow\config.toml       config
+C:\Users\<you>\.forgeflow\forgeflow.sqlite  memory
+C:\Users\<you>\.forgeflow\patterns\         user patterns
+C:\Users\<you>\.forgeflow\workflows\        user workflows
+C:\Users\<you>\.forgeflow\plugins\          plugins
+
+macOS / Linux:
 ~/.forgeflow/config.toml       config
 ~/.forgeflow/forgeflow.sqlite  memory
 ~/.forgeflow/patterns/         user patterns

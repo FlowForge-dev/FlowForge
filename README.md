@@ -32,6 +32,13 @@ notepad $HOME\.forgeflow\config.toml
 Your first `forge` command creates this automatically:
 
 ```text
+Windows:
+%USERPROFILE%\.forgeflow\config.toml
+%USERPROFILE%\.forgeflow\patterns\
+%USERPROFILE%\.forgeflow\workflows\
+%USERPROFILE%\.forgeflow\plugins\
+
+macOS / Linux:
 ~/.forgeflow/config.toml
 ~/.forgeflow/patterns/
 ~/.forgeflow/workflows/
@@ -43,6 +50,10 @@ Your first `forge` command creates this automatically:
 Open the config file that already exists:
 
 ```text
+Windows:
+%USERPROFILE%\.forgeflow\config.toml
+
+macOS / Linux:
 ~/.forgeflow/config.toml
 ```
 

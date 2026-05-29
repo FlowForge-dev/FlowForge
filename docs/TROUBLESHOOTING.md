@@ -44,7 +44,14 @@ notepad $HOME\.forgeflow\config.toml
 The installed program lives here:
 
 ```text
-C:\Users\<you>\.cargo\bin\forge.exe
+%USERPROFILE%\.cargo\bin\forge.exe
+```
+
+The config lives here:
+
+```text
+Windows:
+%USERPROFILE%\.forgeflow\config.toml
 ```
 
 ## Provider Is Not Configured
