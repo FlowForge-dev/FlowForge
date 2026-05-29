@@ -21,6 +21,32 @@ curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/instal
 forge provider list
 ```
 
+Windows:
+
+```powershell
+irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 | iex
+forge provider list
+```
+
+## I Cannot `cd flowforge`
+
+That is okay.
+
+After install, you do not need the repo folder.
+
+Run this from anywhere:
+
+```powershell
+forge provider list
+notepad $HOME\.forgeflow\config.toml
+```
+
+The installed program lives here:
+
+```text
+C:\Users\<you>\.cargo\bin\forge.exe
+```
+
 ## Provider Is Not Configured
 
 First make sure the starter files exist by running any normal command:

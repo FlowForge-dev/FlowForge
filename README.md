@@ -22,6 +22,13 @@ forge provider list
 
 If no release binary exists yet, the installer builds from source. If it asks for Rust, install Rust from [rustup.rs](https://rustup.rs/) and run the installer again.
 
+After install, stay anywhere. Do **not** `cd flowforge`. Just run:
+
+```powershell
+forge provider list
+notepad $HOME\.forgeflow\config.toml
+```
+
 Your first `forge` command creates this automatically:
 
 ```text
@@ -37,6 +44,12 @@ Open the config file that already exists:
 
 ```text
 ~/.forgeflow/config.toml
+```
+
+Windows:
+
+```powershell
+notepad $HOME\.forgeflow\config.toml
 ```
 
 It already has safe defaults. For OpenAI, make sure it contains:

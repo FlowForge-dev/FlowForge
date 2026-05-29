@@ -1,8 +1,8 @@
 $ErrorActionPreference = "Stop"
 
 $Repo = "FlowForge-dev/FlowForge"
-$BinDir = if ($env:FLOWFORGE_BIN_DIR) { $env:FLOWFORGE_BIN_DIR } else { "$HOME\.flowforge\bin" }
 $CargoBin = Join-Path $HOME ".cargo\bin"
+$BinDir = if ($env:FLOWFORGE_BIN_DIR) { $env:FLOWFORGE_BIN_DIR } else { $CargoBin }
 $TmpDir = Join-Path ([System.IO.Path]::GetTempPath()) ("flowforge-" + [System.Guid]::NewGuid())
 $Target = "x86_64-pc-windows-msvc"
 $Url = "https://github.com/$Repo/releases/latest/download/flowforge-$Target.zip"
