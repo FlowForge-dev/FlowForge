@@ -4,8 +4,12 @@ version = "0.1.0"
 edition = "2024"
 authors = ["ForgeFlow Contributors"]
 description = "Terminal-first AI automation platform for developers"
-license = "MIT OR Apache-2.0"
-repository = "https://github.com/forgeflow/forgeflow"
+license = "MIT"
+repository = "https://github.com/AndroRAT-user/FlowForge"
+readme = "README.md"
+rust-version = "1.85"
+keywords = ["ai", "cli", "automation", "agents", "terminal"]
+categories = ["command-line-utilities", "development-tools"]
 
 [[bin]]
 name = "forge"
@@ -33,5 +37,7 @@ toml = "0.9"
 uuid = { version = "1.18", features = ["v4", "serde"] }
 
 [dev-dependencies]
+assert_cmd = "2.0"
 httpmock = "0.8"
+predicates = "3.1"
 tempfile = "3.23"

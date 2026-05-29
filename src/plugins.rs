@@ -37,7 +37,8 @@ pub fn handle_plugin_command(command: PluginCommand) -> Result<()> {
             info("MVP discovers local plugin manifests; registry download arrives in phase 5.");
         }
         PluginCommand::Remove { name } => {
-            let path = plugins_dir()?.join(&name);
+            validate_slug(&name)?;
+            let path = safe_plugin_path(&name)?;
             if path.exists() {
                 fs::remove_dir_all(path)?;
             }
@@ -57,7 +58,8 @@ pub fn handle_plugin_command(command: PluginCommand) -> Result<()> {
 }
 
 fn scaffold_plugin(name: &str) -> Result<()> {
-    let plugin_dir = plugins_dir()?.join(name);
+    validate_slug(name)?;
+    let plugin_dir = safe_plugin_path(name)?;
     fs::create_dir_all(plugin_dir.join("patterns"))?;
     fs::create_dir_all(plugin_dir.join("workflows"))?;
     fs::create_dir_all(plugin_dir.join("tools"))?;
@@ -97,6 +99,7 @@ fn validate_plugin(path: &Path) -> Result<()> {
     if manifest.name.trim().is_empty() {
         bail!("plugin name cannot be empty");
     }
+    validate_slug(&manifest.name)?;
     if manifest.version.trim().is_empty() {
         bail!("plugin version cannot be empty");
     }
@@ -110,6 +113,42 @@ fn validate_plugin(path: &Path) -> Result<()> {
         bail!("plugin must declare at least one capability");
     }
     Ok(())
+}
+
+fn safe_plugin_path(name: &str) -> Result<std::path::PathBuf> {
+    validate_slug(name)?;
+    let base = plugins_dir()?;
+    fs::create_dir_all(&base)?;
+    let base = base.canonicalize()?;
+    let path = base.join(name);
+    if !path.starts_with(&base) {
+        bail!("plugin path escaped plugin directory");
+    }
+    Ok(path)
+}
+
+fn validate_slug(name: &str) -> Result<()> {
+    let valid = !name.is_empty()
+        && name.len() <= 64
+        && name
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_');
+    if valid {
+        Ok(())
+    } else {
+        bail!("invalid plugin name `{name}`; use letters, numbers, hyphen, or underscore")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn rejects_path_traversal_plugin_names() {
+        assert!(validate_slug("../oops").is_err());
+        assert!(validate_slug("ok-plugin_1").is_ok());
+    }
 }
 
 fn print_plugins() -> Result<()> {

@@ -19,7 +19,27 @@ pub struct ForgeConfig {
     pub memory_enabled: bool,
     pub plugins_enabled: bool,
     #[serde(default)]
+    pub tools: ToolConfig,
+    #[serde(default)]
+    pub project: ProjectConfig,
+    #[serde(default)]
     pub providers: BTreeMap<String, ProviderConfig>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ToolConfig {
+    #[serde(default)]
+    pub shell_enabled: bool,
+    #[serde(default)]
+    pub allow_write_outside_workspace: bool,
+    #[serde(default = "default_max_search_file_bytes")]
+    pub max_search_file_bytes: u64,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ProjectConfig {
+    #[serde(default = "default_max_index_file_bytes")]
+    pub max_index_file_bytes: u64,
 }
 
 #[derive(Debug, Clone, Default, Serialize, Deserialize)]
@@ -106,14 +126,34 @@ impl Default for ForgeConfig {
 
         Self {
             provider: "openai".to_string(),
-            model: "gpt-5.5".to_string(),
+            model: "gpt-4.1-mini".to_string(),
             temperature: default_temperature(),
             max_tokens: default_max_tokens(),
             timeout_secs: default_timeout_secs(),
             retries: default_retries(),
             memory_enabled: true,
             plugins_enabled: true,
+            tools: ToolConfig::default(),
+            project: ProjectConfig::default(),
             providers,
+        }
+    }
+}
+
+impl Default for ToolConfig {
+    fn default() -> Self {
+        Self {
+            shell_enabled: false,
+            allow_write_outside_workspace: false,
+            max_search_file_bytes: default_max_search_file_bytes(),
+        }
+    }
+}
+
+impl Default for ProjectConfig {
+    fn default() -> Self {
+        Self {
+            max_index_file_bytes: default_max_index_file_bytes(),
         }
     }
 }
@@ -252,4 +292,38 @@ fn default_timeout_secs() -> u64 {
 
 fn default_retries() -> u32 {
     2
+}
+
+fn default_max_search_file_bytes() -> u64 {
+    1_048_576
+}
+
+fn default_max_index_file_bytes() -> u64 {
+    1_048_576
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn resolves_environment_secret_reference() {
+        unsafe {
+            std::env::set_var("FORGEFLOW_TEST_SECRET", "secret-value");
+        }
+        assert_eq!(
+            resolve_secret("${FORGEFLOW_TEST_SECRET}"),
+            Some("secret-value".to_string())
+        );
+        unsafe {
+            std::env::remove_var("FORGEFLOW_TEST_SECRET");
+        }
+    }
+
+    #[test]
+    fn default_config_disables_dangerous_shell() {
+        let config = ForgeConfig::default();
+        assert!(!config.tools.shell_enabled);
+        assert!(!config.tools.allow_write_outside_workspace);
+    }
 }

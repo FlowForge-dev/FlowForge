@@ -27,7 +27,7 @@ pub struct IndexedFile {
     pub symbols: Vec<String>,
 }
 
-pub fn build_index(path: impl AsRef<Path>) -> Result<ProjectIndex> {
+pub fn build_index(path: impl AsRef<Path>, config: &ForgeConfig) -> Result<ProjectIndex> {
     let root = path.as_ref();
     let mut files = Vec::new();
     let mut extensions = BTreeMap::new();
@@ -43,8 +43,17 @@ pub fn build_index(path: impl AsRef<Path>) -> Result<ProjectIndex> {
             continue;
         }
         let path = entry.path();
+        let metadata = path
+            .metadata()
+            .with_context(|| format!("failed to stat {}", path.display()))?;
+        if metadata.len() > config.project.max_index_file_bytes {
+            continue;
+        }
         let bytes =
             std::fs::read(path).with_context(|| format!("failed to read {}", path.display()))?;
+        if looks_binary(&bytes) {
+            continue;
+        }
         let sha256 = sha256_hex(&bytes);
         let extension = path
             .extension()
@@ -78,8 +87,8 @@ pub fn build_index(path: impl AsRef<Path>) -> Result<ProjectIndex> {
     })
 }
 
-pub fn print_project_scan(path: impl AsRef<Path>) -> Result<()> {
-    let index = build_index(path)?;
+pub fn print_project_scan(path: impl AsRef<Path>, config: &ForgeConfig) -> Result<()> {
+    let index = build_index(path, config)?;
     heading("Project Scan");
     println!("files       {}", index.files.len());
     println!("root        {}", index.root);
@@ -108,7 +117,7 @@ pub async fn explain_project(
     config: &ForgeConfig,
     providers: &ProviderRegistry,
 ) -> Result<()> {
-    let context = scan_context(".")?;
+    let context = scan_context(".", config)?;
     let output = patterns.run("explain", &context, config, providers).await?;
     println!("{output}");
     Ok(())
@@ -119,7 +128,7 @@ pub async fn architecture(
     config: &ForgeConfig,
     providers: &ProviderRegistry,
 ) -> Result<()> {
-    let context = scan_context(".")?;
+    let context = scan_context(".", config)?;
     let output = patterns
         .run("architecture", &context, config, providers)
         .await?;
@@ -132,7 +141,7 @@ pub async fn generate_docs(
     config: &ForgeConfig,
     providers: &ProviderRegistry,
 ) -> Result<()> {
-    let context = scan_context(".")?;
+    let context = scan_context(".", config)?;
     let output = patterns
         .run("summarize", &context, config, providers)
         .await?;
@@ -170,8 +179,8 @@ pub fn find_dead_code(path: impl AsRef<Path>) -> Result<()> {
     Ok(())
 }
 
-fn scan_context(path: impl AsRef<Path>) -> Result<String> {
-    let index = build_index(path)?;
+fn scan_context(path: impl AsRef<Path>, config: &ForgeConfig) -> Result<String> {
+    let index = build_index(path, config)?;
     let symbol_context = index
         .files
         .iter()
@@ -190,8 +199,8 @@ fn scan_context(path: impl AsRef<Path>) -> Result<String> {
     ))
 }
 
-pub fn index_context(path: impl AsRef<Path>) -> Result<String> {
-    scan_context(path)
+pub fn index_context(path: impl AsRef<Path>, config: &ForgeConfig) -> Result<String> {
+    scan_context(path, config)
 }
 
 fn is_manifest(name: &str) -> bool {
@@ -264,4 +273,8 @@ fn sha256_hex(bytes: &[u8]) -> String {
 
 fn normalize_path(path: &Path) -> String {
     path.to_string_lossy().replace('\\', "/")
+}
+
+fn looks_binary(bytes: &[u8]) -> bool {
+    bytes.iter().take(1024).any(|byte| *byte == 0)
 }

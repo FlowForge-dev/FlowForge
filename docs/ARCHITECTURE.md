@@ -201,7 +201,7 @@ Config path: `~/.forgeflow/config.toml`.
 
 ```toml
 provider = "openai"
-model = "gpt-5.5"
+model = "gpt-4.1-mini"
 temperature = 0.7
 max_tokens = 2048
 timeout_secs = 120
@@ -215,6 +215,13 @@ api_key = "${OPENAI_API_KEY}"
 [providers.ollama]
 host = "http://localhost:11434"
 model = "llama3.2"
+
+[tools]
+shell_enabled = false
+allow_write_outside_workspace = false
+
+[project]
+max_index_file_bytes = 1048576
 ```
 
 Provider secrets stay in environment variables by default.

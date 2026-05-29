@@ -164,6 +164,13 @@ impl ProviderRegistry {
 
     pub async fn test(&self, provider: Option<&str>, config: &ForgeConfig) -> Result<()> {
         heading("Provider Test");
+        if provider.is_none() {
+            info(
+                "Configured remote providers will receive a tiny live test prompt and may use paid credits.",
+            );
+        } else if provider != Some("ollama") {
+            info("This sends a tiny live test prompt and may use paid provider credits.");
+        }
         if let Some(provider) = provider {
             self.test_one(provider, config).await?;
             return Ok(());

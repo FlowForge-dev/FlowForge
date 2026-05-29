@@ -17,6 +17,7 @@ pub struct Workflow {
 }
 
 pub fn create_workflow(name: &str) -> Result<()> {
+    validate_name(name)?;
     let path = workflow_path(name)?;
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent)?;
@@ -40,6 +41,7 @@ pub async fn run_workflow(
     config: &ForgeConfig,
     providers: &ProviderRegistry,
 ) -> Result<String> {
+    validate_name(name)?;
     let workflow = load_workflow(name)?;
     let mut current = input.to_string();
     for step in workflow.steps {
@@ -63,6 +65,7 @@ pub fn print_workflows() -> Result<()> {
 }
 
 pub fn edit_workflow(name: &str) -> Result<()> {
+    validate_name(name)?;
     let path = workflow_path(name)?;
     if !path.exists() {
         create_workflow(name)?;
@@ -93,6 +96,7 @@ pub fn print_marketplace() -> Result<()> {
 }
 
 pub fn install_marketplace_workflow(name: &str) -> Result<()> {
+    validate_name(name)?;
     let source = PathBuf::from("examples")
         .join("workflows")
         .join(format!("{name}.yaml"));
@@ -109,6 +113,7 @@ pub fn install_marketplace_workflow(name: &str) -> Result<()> {
 }
 
 pub fn publish_workflow(name: &str) -> Result<()> {
+    validate_name(name)?;
     let path = workflow_path(name)?;
     if !path.exists() {
         bail!("workflow `{name}` does not exist in your workflow directory")
@@ -118,6 +123,7 @@ pub fn publish_workflow(name: &str) -> Result<()> {
 }
 
 fn load_workflow(name: &str) -> Result<Workflow> {
+    validate_name(name)?;
     let user_path = workflow_path(name)?;
     if user_path.exists() {
         return read_workflow(&user_path);
@@ -179,4 +185,17 @@ fn read_workflow(path: &Path) -> Result<Workflow> {
 
 fn workflow_path(name: &str) -> Result<PathBuf> {
     Ok(workflows_dir()?.join(format!("{name}.yaml")))
+}
+
+fn validate_name(name: &str) -> Result<()> {
+    let valid = !name.is_empty()
+        && name.len() <= 64
+        && name
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_');
+    if valid {
+        Ok(())
+    } else {
+        bail!("invalid workflow name `{name}`; use letters, numbers, hyphen, or underscore")
+    }
 }

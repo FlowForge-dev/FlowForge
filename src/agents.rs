@@ -96,7 +96,7 @@ pub async fn handle_agent_command(
     };
 
     heading(&format!("Agent Pipeline: {title}"));
-    let project_context = project::index_context(".")?;
+    let project_context = project::index_context(".", config)?;
     let mut outputs = Vec::new();
     for agent in pipeline {
         info(&format!("{} running", agent.name()));

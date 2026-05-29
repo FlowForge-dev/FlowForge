@@ -114,6 +114,7 @@ impl PatternEngine {
     }
 
     pub fn create_user_pattern(&self, name: &str) -> Result<()> {
+        validate_name(name)?;
         let path = user_pattern_path(name)?;
         if let Some(parent) = path.parent() {
             fs::create_dir_all(parent)?;
@@ -141,6 +142,7 @@ impl PatternEngine {
 
     pub fn install_pattern(&self, path: &Path) -> Result<()> {
         let pattern = read_pattern(path)?;
+        validate_name(&pattern.name)?;
         let target = user_pattern_path(&pattern.name)?;
         if let Some(parent) = target.parent() {
             fs::create_dir_all(parent)?;
@@ -150,6 +152,7 @@ impl PatternEngine {
     }
 
     pub fn remove_user_pattern(&self, name: &str) -> Result<()> {
+        validate_name(name)?;
         let path = user_pattern_path(name)?;
         if path.exists() {
             fs::remove_file(path)?;
@@ -158,6 +161,7 @@ impl PatternEngine {
     }
 
     fn load_pattern(&self, name: &str) -> Result<Pattern> {
+        validate_name(name)?;
         for pattern in self.list_patterns()? {
             if pattern.name == name {
                 return Ok(pattern);
@@ -176,6 +180,19 @@ fn read_pattern(path: &Path) -> Result<Pattern> {
 
 fn user_pattern_path(name: &str) -> Result<PathBuf> {
     Ok(patterns_dir()?.join(format!("{name}.yaml")))
+}
+
+fn validate_name(name: &str) -> Result<()> {
+    let valid = !name.is_empty()
+        && name.len() <= 64
+        && name
+            .chars()
+            .all(|ch| ch.is_ascii_alphanumeric() || ch == '-' || ch == '_');
+    if valid {
+        Ok(())
+    } else {
+        bail!("invalid pattern name `{name}`; use letters, numbers, hyphen, or underscore")
+    }
 }
 
 fn open_editor(path: &Path) -> Result<()> {

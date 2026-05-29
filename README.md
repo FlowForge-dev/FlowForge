@@ -71,7 +71,7 @@ Minimal OpenAI example:
 
 ```toml
 provider = "openai"
-model = "gpt-5.5"
+model = "gpt-4.1-mini"
 temperature = 0.7
 max_tokens = 2048
 timeout_secs = 120
@@ -281,6 +281,20 @@ api_key = "${OPENAI_API_KEY}"
 ```
 
 Report vulnerabilities privately using the process in [SECURITY.md](SECURITY.md).
+
+Dangerous tools are opt-in:
+
+```toml
+[tools]
+shell_enabled = false
+allow_write_outside_workspace = false
+max_search_file_bytes = 1048576
+
+[project]
+max_index_file_bytes = 1048576
+```
+
+See [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) and [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
 
 ## License
 

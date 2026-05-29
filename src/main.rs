@@ -55,7 +55,7 @@ async fn main() -> Result<()> {
         Commands::Agent { command } => {
             agents::handle_agent_command(command, &patterns, &config, &providers).await?
         }
-        Commands::Analyze => project::print_project_scan(".")?,
+        Commands::Analyze => project::print_project_scan(".", &config)?,
         Commands::ExplainProject => {
             project::explain_project(&patterns, &config, &providers).await?
         }
@@ -70,7 +70,7 @@ async fn main() -> Result<()> {
         Commands::Recall => memory.print_recent(10)?,
         Commands::Memory { command } => handle_memory(command, &memory)?,
         Commands::Plugin { command } => plugins::handle_plugin_command(command)?,
-        Commands::Tool { command } => handle_tool(command).await?,
+        Commands::Tool { command } => handle_tool(command, &config).await?,
         Commands::Chat => chat(&config, &providers).await?,
     }
 
@@ -219,17 +219,17 @@ fn handle_memory(command: MemoryCommand, memory: &MemoryStore) -> Result<()> {
     Ok(())
 }
 
-async fn handle_tool(command: ToolCommand) -> Result<()> {
+async fn handle_tool(command: ToolCommand, config: &ForgeConfig) -> Result<()> {
     match command {
-        ToolCommand::Search { query, path } => tools::search(&query, path.as_deref())?,
+        ToolCommand::Search { query, path } => tools::search(&query, path.as_deref(), config)?,
         ToolCommand::Git { args } => tools::git(args).await?,
         ToolCommand::Http { url } => tools::http_get(&url).await?,
-        ToolCommand::Shell { command } => tools::shell(command).await?,
+        ToolCommand::Shell { command } => tools::shell(command, config).await?,
         ToolCommand::Read { path } => tools::read_file(&path)?,
-        ToolCommand::Write { path, text } => tools::write_file(&path, &text)?,
+        ToolCommand::Write { path, text } => tools::write_file(&path, &text, config)?,
         ToolCommand::Scan { path } => {
             let path = path.unwrap_or_else(|| ".".into());
-            project::print_project_scan(path)?
+            project::print_project_scan(path, config)?
         }
     }
     Ok(())
