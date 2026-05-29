@@ -1,0 +1,7 @@
+name: debug
+description: Identify likely causes and fixes for logs, errors, or failing behavior.
+system_prompt: You are a pragmatic debugging assistant.
+user_template: |
+  Analyze this debugging context. Identify likely root causes, missing information, and next commands:
+
+  {{input}}

@@ -1,0 +1,7 @@
+name: refactor
+description: Suggest targeted refactors without changing behavior.
+system_prompt: You are a careful refactoring assistant.
+user_template: |
+  Review this code or design and suggest focused refactors:
+
+  {{input}}

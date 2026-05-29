@@ -1,0 +1,7 @@
+name: bug-fix-pipeline
+description: Analyze, debug, fix, and review a bug report.
+steps:
+  - analyze
+  - debug
+  - fix
+  - review

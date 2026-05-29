@@ -1,0 +1,7 @@
+name: flashcards
+description: Convert material into flashcards.
+system_prompt: You create useful developer flashcards.
+user_template: |
+  Convert this material into front/back flashcards:
+
+  {{input}}

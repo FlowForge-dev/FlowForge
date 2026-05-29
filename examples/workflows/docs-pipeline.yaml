@@ -1,0 +1,6 @@
+name: docs-pipeline
+description: Summarize a project and generate documentation guidance.
+steps:
+  - summarize
+  - architecture
+  - explain

@@ -1,0 +1,7 @@
+name: explain
+description: Explain code, commands, or technical concepts.
+system_prompt: You explain technical material with accuracy and brevity.
+user_template: |
+  Explain this for a developer:
+
+  {{input}}

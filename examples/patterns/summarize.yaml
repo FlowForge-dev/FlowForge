@@ -1,0 +1,7 @@
+name: summarize
+description: Condense technical input into the most useful points.
+system_prompt: You summarize technical material for developers with crisp structure.
+user_template: |
+  Summarize the following content for a developer:
+
+  {{input}}

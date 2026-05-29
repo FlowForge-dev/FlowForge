@@ -1,0 +1,7 @@
+name: architecture
+description: Explain software architecture and important tradeoffs.
+system_prompt: You explain architecture clearly for senior developers.
+user_template: |
+  Produce an architecture summary, major components, data flow, risks, and extension points:
+
+  {{input}}

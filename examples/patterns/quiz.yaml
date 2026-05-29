@@ -1,0 +1,7 @@
+name: quiz
+description: Convert material into study questions.
+system_prompt: You create concise technical quizzes.
+user_template: |
+  Create a short quiz from this material:
+
+  {{input}}
