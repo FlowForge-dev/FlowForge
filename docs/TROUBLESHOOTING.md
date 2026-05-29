@@ -4,6 +4,8 @@
 
 ## `cargo` Is Missing
 
+The installer tried to build from source because a release binary was not available yet.
+
 Install Rust:
 
 ```bash
@@ -15,19 +17,16 @@ Windows: use [rustup.rs](https://rustup.rs/).
 Then install FlowForge:
 
 ```bash
-git clone https://github.com/FlowForge-dev/FlowForge.git
-cd FlowForge
-cargo install --path .
-forge init
+curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.sh | sh
 forge provider list
 ```
 
 ## Provider Is Not Configured
 
-First make sure the starter files exist:
+First make sure the starter files exist by running any normal command:
 
 ```bash
-forge init
+forge provider list
 ```
 
 Set your key:
