@@ -20,10 +20,20 @@ irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 |
 forge provider list
 ```
 
+The installer creates this automatically:
+
+```text
+~/.forgeflow/config.toml
+~/.forgeflow/patterns/
+~/.forgeflow/workflows/
+~/.forgeflow/plugins/
+```
+
 If no release binary exists yet, install from source:
 
 ```bash
 cargo install --git https://github.com/FlowForge-dev/FlowForge
+forge init
 forge provider list
 ```
 
@@ -37,13 +47,13 @@ Windows users can install Rust from [rustup.rs](https://rustup.rs/).
 
 ## 60-Second Setup
 
-Create this file:
+Open the config file that already exists:
 
 ```text
 ~/.forgeflow/config.toml
 ```
 
-Paste this:
+It already has safe defaults. For OpenAI, make sure it contains:
 
 ```toml
 provider = "openai"

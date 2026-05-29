@@ -26,6 +26,12 @@ Windows: use [rustup.rs](https://rustup.rs/).
 
 ## Provider Is Not Configured
 
+First make sure the starter files exist:
+
+```bash
+forge init
+```
+
 Set your key:
 
 ```bash

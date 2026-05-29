@@ -23,6 +23,7 @@ curl -fsSL "$url" -o "$tmp_dir/flowforge.tar.gz"
 tar -xzf "$tmp_dir/flowforge.tar.gz" -C "$tmp_dir"
 cp "$tmp_dir/forge" "$bin_dir/forge"
 chmod +x "$bin_dir/forge"
+"$bin_dir/forge" init
 
 echo "Installed forge to $bin_dir/forge"
 echo "Run: forge provider list"

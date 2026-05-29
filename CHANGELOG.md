@@ -21,6 +21,7 @@ First public preview.
 - Local workflow marketplace.
 - CI, release workflow, and docs.
 - Beginner install scripts.
+- First run creates config and standard folders automatically.
 
 ### Hardened
 

@@ -24,12 +24,13 @@ use terminal::{heading, info, success};
 #[tokio::main]
 async fn main() -> Result<()> {
     let cli = Cli::parse();
-    let mut config = ForgeConfig::load_or_default()?;
+    let mut config = ForgeConfig::load_or_init()?;
     let memory = MemoryStore::open_default()?;
     let providers = ProviderRegistry::new();
     let patterns = PatternEngine;
 
     match cli.command {
+        Commands::Init => init_home()?,
         Commands::Provider { command } => handle_provider(command, &mut config, &providers).await?,
         Commands::Pattern { command } => handle_pattern(command, &patterns)?,
         Commands::Run { pattern, text } => {
@@ -74,6 +75,17 @@ async fn main() -> Result<()> {
         Commands::Chat => chat(&config, &providers).await?,
     }
 
+    Ok(())
+}
+
+fn init_home() -> Result<()> {
+    config::init_home_layout()?;
+    success("ForgeFlow is ready");
+    println!("home      {}", config::forge_home()?.display());
+    println!("config    {}", config::config_path()?.display());
+    println!("patterns  {}", config::patterns_dir()?.display());
+    println!("workflows {}", config::workflows_dir()?.display());
+    println!("plugins   {}", config::plugins_dir()?.display());
     Ok(())
 }
 

@@ -214,7 +214,12 @@ impl ForgeConfig {
 }
 
 impl ForgeConfig {
-    pub fn load_or_default() -> Result<Self> {
+    pub fn load_or_init() -> Result<Self> {
+        init_home_layout()?;
+        Self::load()
+    }
+
+    pub fn load() -> Result<Self> {
         let path = config_path()?;
         if !path.exists() {
             return Ok(Self::default());
@@ -233,6 +238,20 @@ impl ForgeConfig {
         let raw = toml::to_string_pretty(self)?;
         fs::write(&path, raw).with_context(|| format!("failed to write config {}", path.display()))
     }
+}
+
+pub fn init_home_layout() -> Result<()> {
+    let home = forge_home()?;
+    fs::create_dir_all(&home)?;
+    fs::create_dir_all(patterns_dir()?)?;
+    fs::create_dir_all(workflows_dir()?)?;
+    fs::create_dir_all(plugins_dir()?)?;
+
+    let path = config_path()?;
+    if !path.exists() {
+        ForgeConfig::default().save()?;
+    }
+    Ok(())
 }
 
 pub fn forge_home() -> Result<PathBuf> {

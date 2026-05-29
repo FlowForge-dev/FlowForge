@@ -13,6 +13,7 @@ Write-Host "Downloading FlowForge for Windows..."
 Invoke-WebRequest -Uri $Url -OutFile (Join-Path $TmpDir "flowforge.zip")
 Expand-Archive -Path (Join-Path $TmpDir "flowforge.zip") -DestinationPath $TmpDir -Force
 Copy-Item (Join-Path $TmpDir "forge.exe") (Join-Path $BinDir "forge.exe") -Force
+& (Join-Path $BinDir "forge.exe") init
 
 $UserPath = [Environment]::GetEnvironmentVariable("Path", "User")
 if ($UserPath -notlike "*$BinDir*") {

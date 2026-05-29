@@ -17,6 +17,24 @@ fn provider_list_runs_without_config() {
         .assert()
         .success()
         .stdout(predicate::str::contains("Supported Providers"));
+    assert!(home.path().join("config.toml").exists());
+    assert!(home.path().join("patterns").is_dir());
+    assert!(home.path().join("workflows").is_dir());
+    assert!(home.path().join("plugins").is_dir());
+}
+
+#[test]
+fn init_creates_everything() {
+    let home = tempdir().unwrap();
+    forge(home.path())
+        .arg("init")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("ForgeFlow is ready"));
+    assert!(home.path().join("config.toml").exists());
+    assert!(home.path().join("patterns").is_dir());
+    assert!(home.path().join("workflows").is_dir());
+    assert!(home.path().join("plugins").is_dir());
 }
 
 #[test]

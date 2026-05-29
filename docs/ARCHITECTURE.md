@@ -95,6 +95,8 @@ Planner -> Coder -> Tester -> Reviewer
 
 ## Storage
 
+Created automatically on first run:
+
 ```text
 ~/.forgeflow/config.toml       config
 ~/.forgeflow/forgeflow.sqlite  memory
