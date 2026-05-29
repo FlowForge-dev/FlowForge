@@ -26,7 +26,7 @@ After install, stay anywhere. Do **not** `cd flowforge`. Just run:
 
 ```powershell
 forge provider list
-notepad $HOME\.forgeflow\config.toml
+notepad "$env:USERPROFILE\.forgeflow\config.toml"
 ```
 
 Your first `forge` command creates this automatically:
@@ -60,7 +60,7 @@ macOS / Linux:
 Windows:
 
 ```powershell
-notepad $HOME\.forgeflow\config.toml
+notepad "$env:USERPROFILE\.forgeflow\config.toml"
 ```
 
 It already has safe defaults. For OpenAI, make sure it contains:

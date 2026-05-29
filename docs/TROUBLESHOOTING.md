@@ -38,7 +38,7 @@ Run this from anywhere:
 
 ```powershell
 forge provider list
-notepad $HOME\.forgeflow\config.toml
+notepad "$env:USERPROFILE\.forgeflow\config.toml"
 ```
 
 The installed program lives here:
