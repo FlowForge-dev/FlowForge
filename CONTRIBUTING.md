@@ -5,7 +5,7 @@ Thanks for helping improve FlowForge.
 ## Local Setup
 
 ```bash
-git clone https://github.com/AndroRAT-user/FlowForge.git
+git clone https://github.com/FlowForge-dev/FlowForge.git
 cd FlowForge
 cargo build
 cargo test

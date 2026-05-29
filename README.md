@@ -34,7 +34,7 @@ cargo --version
 ### 2. Clone FlowForge
 
 ```bash
-git clone https://github.com/AndroRAT-user/FlowForge.git
+git clone https://github.com/FlowForge-dev/FlowForge.git
 cd FlowForge
 ```
 
