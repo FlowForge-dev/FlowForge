@@ -22,6 +22,7 @@ First public preview.
 - CI, release workflow, and docs.
 - Beginner install scripts.
 - First run creates config and standard folders automatically.
+- Beginner config commands: `forge config open`, `forge config path`, `forge config show`, and `forge config reset`.
 - Knowledge extraction pattern pack.
 - Demo workflows for knowledge, study, decisions, and content.
 

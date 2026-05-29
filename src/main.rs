@@ -13,7 +13,8 @@ mod workflows;
 use anyhow::Result;
 use clap::Parser;
 use cli::{
-    Cli, Commands, MemoryCommand, PatternCommand, ProviderCommand, ToolCommand, WorkflowCommand,
+    Cli, Commands, ConfigCommand, MemoryCommand, PatternCommand, ProviderCommand, ToolCommand,
+    WorkflowCommand,
 };
 use config::ForgeConfig;
 use memory::MemoryStore;
@@ -31,6 +32,7 @@ async fn main() -> Result<()> {
 
     match cli.command {
         Commands::Init => init_home()?,
+        Commands::Config { command } => handle_config(command, &config)?,
         Commands::Provider { command } => handle_provider(command, &mut config, &providers).await?,
         Commands::Pattern { command } => handle_pattern(command, &patterns)?,
         Commands::Run { pattern, text } => {
@@ -86,6 +88,47 @@ fn init_home() -> Result<()> {
     println!("patterns  {}", config::patterns_dir()?.display());
     println!("workflows {}", config::workflows_dir()?.display());
     println!("plugins   {}", config::plugins_dir()?.display());
+    Ok(())
+}
+
+fn handle_config(command: ConfigCommand, config: &ForgeConfig) -> Result<()> {
+    match command {
+        ConfigCommand::Open => open_config_file()?,
+        ConfigCommand::Path => println!("{}", config::config_path()?.display()),
+        ConfigCommand::Show => println!("{}", toml::to_string_pretty(config)?),
+        ConfigCommand::Reset => {
+            ForgeConfig::default().save()?;
+            success("Reset config");
+            println!("config {}", config::config_path()?.display());
+        }
+    }
+    Ok(())
+}
+
+fn open_config_file() -> Result<()> {
+    use anyhow::{Context, bail};
+    use std::process::Command;
+
+    config::init_home_layout()?;
+    let path = config::config_path()?;
+    println!("Opening {}", path.display());
+
+    let status = if cfg!(windows) {
+        Command::new("notepad.exe")
+            .arg(&path)
+            .status()
+            .context("failed to open Notepad")?
+    } else {
+        let editor = std::env::var("EDITOR").unwrap_or_else(|_| "vi".to_string());
+        Command::new(&editor)
+            .arg(&path)
+            .status()
+            .with_context(|| format!("failed to open editor `{editor}`"))?
+    };
+
+    if !status.success() {
+        bail!("editor closed with an error");
+    }
     Ok(())
 }
 

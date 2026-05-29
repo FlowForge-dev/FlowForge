@@ -38,7 +38,7 @@ Run this from anywhere:
 
 ```powershell
 forge provider list
-notepad "$env:USERPROFILE\.forgeflow\config.toml"
+forge config open
 ```
 
 The installed program lives here:
@@ -49,9 +49,8 @@ The installed program lives here:
 
 The config lives here:
 
-```text
-Windows:
-%USERPROFILE%\.forgeflow\config.toml
+```bash
+forge config path
 ```
 
 ## Provider Is Not Configured
@@ -60,6 +59,12 @@ First make sure the starter files exist by running any normal command:
 
 ```bash
 forge provider list
+```
+
+Open config:
+
+```bash
+forge config open
 ```
 
 Set your key:

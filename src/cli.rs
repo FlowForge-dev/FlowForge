@@ -17,6 +17,10 @@ pub struct Cli {
 #[derive(Debug, Subcommand)]
 pub enum Commands {
     Init,
+    Config {
+        #[command(subcommand)]
+        command: ConfigCommand,
+    },
     Provider {
         #[command(subcommand)]
         command: ProviderCommand,
@@ -65,6 +69,14 @@ pub enum Commands {
         command: ToolCommand,
     },
     Chat,
+}
+
+#[derive(Debug, Subcommand)]
+pub enum ConfigCommand {
+    Open,
+    Path,
+    Show,
+    Reset,
 }
 
 #[derive(Debug, Subcommand)]

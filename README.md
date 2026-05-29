@@ -26,7 +26,7 @@ After install, stay anywhere. Do **not** `cd flowforge`. Just run:
 
 ```powershell
 forge provider list
-notepad "$env:USERPROFILE\.forgeflow\config.toml"
+forge config open
 ```
 
 Your first `forge` command creates this automatically:
@@ -49,21 +49,17 @@ macOS / Linux:
 
 Open the config file that already exists:
 
-```text
-Windows:
-%USERPROFILE%\.forgeflow\config.toml
-
-macOS / Linux:
-~/.forgeflow/config.toml
+```bash
+forge config open
 ```
 
-Windows:
+If your editor does not open, print the exact file path:
 
-```powershell
-notepad "$env:USERPROFILE\.forgeflow\config.toml"
+```bash
+forge config path
 ```
 
-It already has safe defaults. For OpenAI, make sure it contains:
+The config already has safe defaults. For OpenAI, make sure it contains:
 
 ```toml
 provider = "openai"
@@ -119,6 +115,7 @@ forge agent debug-project
 | Save a note | `forge remember "Use short output"` |
 | Search memory | `forge memory search short` |
 | List providers | `forge provider list` |
+| Open config | `forge config open` |
 
 ## What Is A Pattern?
 

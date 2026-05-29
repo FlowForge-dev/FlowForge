@@ -38,6 +38,29 @@ fn init_creates_everything() {
 }
 
 #[test]
+fn config_path_prints_real_config_file() {
+    let home = tempdir().unwrap();
+    forge(home.path())
+        .arg("config")
+        .arg("path")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("config.toml"));
+    assert!(home.path().join("config.toml").exists());
+}
+
+#[test]
+fn config_show_prints_toml() {
+    let home = tempdir().unwrap();
+    forge(home.path())
+        .arg("config")
+        .arg("show")
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("provider = \"openai\""));
+}
+
+#[test]
 fn shell_tool_requires_explicit_opt_in() {
     let home = tempdir().unwrap();
     forge(home.path())
