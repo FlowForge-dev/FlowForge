@@ -4,25 +4,23 @@
 
 ## `cargo` Is Missing
 
-Use the binary installer first:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.sh | sh
-```
-
-Windows:
-
-```powershell
-irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 | iex
-```
-
-If you want to build from source, install Rust:
+Install Rust:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 Windows: use [rustup.rs](https://rustup.rs/).
+
+Then install FlowForge:
+
+```bash
+git clone https://github.com/FlowForge-dev/FlowForge.git
+cd FlowForge
+cargo install --path .
+forge init
+forge provider list
+```
 
 ## Provider Is Not Configured
 

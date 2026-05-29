@@ -6,33 +6,12 @@ No web app. No desktop app. No login screen. Bring your own AI key.
 
 ## 60-Second Install
 
-macOS or Linux:
+Use this. It works today:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.sh | sh
-forge provider list
-```
-
-Windows PowerShell:
-
-```powershell
-irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 | iex
-forge provider list
-```
-
-The installer creates this automatically:
-
-```text
-~/.forgeflow/config.toml
-~/.forgeflow/patterns/
-~/.forgeflow/workflows/
-~/.forgeflow/plugins/
-```
-
-If no release binary exists yet, install from source:
-
-```bash
-cargo install --git https://github.com/FlowForge-dev/FlowForge
+git clone https://github.com/FlowForge-dev/FlowForge.git
+cd FlowForge
+cargo install --path .
 forge init
 forge provider list
 ```
@@ -43,7 +22,16 @@ If `cargo` is missing, install Rust first:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-Windows users can install Rust from [rustup.rs](https://rustup.rs/).
+Windows users can install Rust from [rustup.rs](https://rustup.rs/), then run the same `git clone`, `cd FlowForge`, and `cargo install --path .` commands in PowerShell.
+
+`forge init` creates this automatically:
+
+```text
+~/.forgeflow/config.toml
+~/.forgeflow/patterns/
+~/.forgeflow/workflows/
+~/.forgeflow/plugins/
+```
 
 ## 60-Second Setup
 
