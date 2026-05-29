@@ -69,8 +69,6 @@ fn provider_configure_openrouter_sets_key_and_model() {
         .arg("openrouter")
         .arg("--api-key")
         .arg("sk-or-test-secret")
-        .arg("--model")
-        .arg("minimax/minimax-m2.5:free")
         .assert()
         .success()
         .stdout(predicate::str::contains("Configured provider openrouter"));
@@ -81,7 +79,7 @@ fn provider_configure_openrouter_sets_key_and_model() {
         .arg("openrouter")
         .assert()
         .success()
-        .stdout(predicate::str::contains("minimax/minimax-m2.5:free"))
+        .stdout(predicate::str::contains("openrouter/free"))
         .stdout(predicate::str::contains("api_key     yes"));
 }
 

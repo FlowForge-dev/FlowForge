@@ -24,6 +24,7 @@ First public preview.
 - First run creates config and standard folders automatically.
 - Beginner config commands: `forge config open`, `forge config path`, `forge config show`, and `forge config reset`.
 - Beginner provider setup with `forge provider configure`.
+- OpenRouter setup now defaults to the `openrouter/free` router and explains model-not-found errors.
 - Knowledge extraction pattern pack.
 - Demo workflows for knowledge, study, decisions, and content.
 

@@ -97,7 +97,7 @@ forge provider test openai
 Configure it with one command:
 
 ```powershell
-forge provider configure openrouter --api-key "sk-or-..." --model "minimax/minimax-m2.5:free"
+forge provider configure openrouter --api-key "sk-or-..." --model "openrouter/free"
 forge provider test openrouter
 ```
 
@@ -105,7 +105,7 @@ If you prefer environment variables:
 
 ```powershell
 setx OPENROUTER_API_KEY "sk-or-..."
-forge provider configure openrouter --api-key-env OPENROUTER_API_KEY --model "minimax/minimax-m2.5:free"
+forge provider configure openrouter --api-key-env OPENROUTER_API_KEY --model "openrouter/free"
 ```
 
 Close PowerShell, open it again, then run:

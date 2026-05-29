@@ -198,6 +198,7 @@ fn configure_provider(
     }
 
     config.provider = provider.clone();
+    let model = model.or_else(|| default_model_for_provider(&provider));
     if let Some(model) = model {
         config.model = model.clone();
         config.providers.entry(provider.clone()).or_default().model = Some(model);
@@ -220,6 +221,13 @@ fn configure_provider(
     success(&format!("Configured provider {provider}"));
     info(&format!("Next: forge provider test {provider}"));
     Ok(())
+}
+
+fn default_model_for_provider(provider: &str) -> Option<String> {
+    match provider {
+        "openrouter" => Some("openrouter/free".to_string()),
+        _ => None,
+    }
 }
 
 fn redacted_config(config: &ForgeConfig) -> ForgeConfig {

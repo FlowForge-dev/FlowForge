@@ -514,8 +514,9 @@ impl ApiProvider {
         on_delta: &mut (dyn for<'a> FnMut(&'a str) + Send),
     ) -> Result<String> {
         let url = format!("{}/chat/completions", self.endpoint(config));
+        let model = self.model(config);
         let body = json!({
-            "model": self.model(config),
+            "model": model,
             "messages": [
                 {"role": "system", "content": request.system_prompt},
                 {"role": "user", "content": request.user_prompt}
@@ -534,6 +535,19 @@ impl ApiProvider {
             .timeout(self.timeout(config))
             .send()
             .await?;
+        let status = response.status();
+        if !status.is_success() {
+            let body = response.text().await.unwrap_or_default();
+            if status == StatusCode::NOT_FOUND || body.contains("Model not found") {
+                bail!(
+                    "OpenRouter model `{model}` was not found by the selected upstream provider. Try: forge provider configure openrouter --model openrouter/free"
+                )
+            }
+            if retryable_status(status) {
+                bail!("retryable provider error {status}: {body}")
+            }
+            bail!("provider error {status}: {body}")
+        }
         ensure_success(response, |response| async move {
             process_sse(response, on_delta, parse_openrouter_delta).await
         })
