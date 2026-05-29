@@ -1,87 +1,59 @@
 # FlowForge
 
-FlowForge is the GitHub home for **ForgeFlow**, a terminal-first AI automation platform for developers.
+**Remember:** FlowForge gives you one command, `forge`, for AI work in your terminal.
 
-ForgeFlow is not an AI model. It is a CLI harness that lets you bring your own provider keys and run reusable patterns, chains, workflows, project-aware agents, memory, plugins, and terminal tools.
+No web app. No desktop app. No login screen. Bring your own AI key.
 
-No web UI. No Electron. No desktop app. Just the terminal.
+## 60-Second Install
 
-## What You Can Do
-
-```bash
-forge run summarize < README.md
-forge chain summarize explain --text "Explain this release note."
-forge chat
-forge agent build-app --goal "Create a small Rust CLI"
-forge agent debug-project
-forge explain-project
-forge workflow run docs-pipeline
-```
-
-## Install
-
-### 1. Install Rust
-
-Install Rust from [rustup.rs](https://rustup.rs/).
-
-Check it:
+macOS or Linux:
 
 ```bash
-rustc --version
-cargo --version
-```
-
-### 2. Clone FlowForge
-
-```bash
-git clone https://github.com/FlowForge-dev/FlowForge.git
-cd FlowForge
-```
-
-### 3. Build the CLI
-
-```bash
-cargo build
-```
-
-### 4. Run it locally
-
-```bash
-cargo run -- provider list
-cargo run -- pattern list
-cargo run -- run summarize --text "ForgeFlow is a terminal-first AI automation harness."
-```
-
-### 5. Install the `forge` command
-
-```bash
-cargo install --path .
+curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.sh | sh
 forge provider list
 ```
 
-## Configure A Provider
+Windows PowerShell:
 
-ForgeFlow reads config from:
+```powershell
+irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 | iex
+forge provider list
+```
+
+If no release binary exists yet, install from source:
+
+```bash
+cargo install --git https://github.com/FlowForge-dev/FlowForge
+forge provider list
+```
+
+If `cargo` is missing, install Rust first:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Windows users can install Rust from [rustup.rs](https://rustup.rs/).
+
+## 60-Second Setup
+
+Create this file:
 
 ```text
 ~/.forgeflow/config.toml
 ```
 
-Minimal OpenAI example:
+Paste this:
 
 ```toml
 provider = "openai"
 model = "gpt-4.1-mini"
-temperature = 0.7
-max_tokens = 2048
-timeout_secs = 120
-retries = 2
 
 [providers.openai]
 api_key = "${OPENAI_API_KEY}"
 ```
 
-Then set your environment variable:
+Set your key:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
@@ -95,23 +67,75 @@ $env:OPENAI_API_KEY = "sk-..."
 forge provider test openai
 ```
 
-## Supported Providers
+## First 5 Commands
+
+Memorize these:
 
 ```bash
-forge provider list
-forge provider info openai
-forge provider test openai
+forge chat
+forge run summarize < README.md
+forge run explain --text "Rust ownership"
+forge explain-project
+forge agent debug-project
 ```
 
-Supported providers:
+## The Cheat Sheet
 
-- OpenAI
-- Anthropic
-- Gemini
-- Ollama
-- OpenRouter
+| Want to... | Run this |
+| --- | --- |
+| Chat | `forge chat` |
+| Summarize text | `forge run summarize < file.md` |
+| Explain something | `forge run explain --text "topic"` |
+| Chain prompts | `forge chain summarize explain < file.md` |
+| Inspect a project | `forge explain-project` |
+| Debug a project | `forge agent debug-project` |
+| Run a workflow | `forge workflow run docs-pipeline < README.md` |
+| Save a note | `forge remember "Use short output"` |
+| Search memory | `forge memory search short` |
+| List providers | `forge provider list` |
 
-Ollama example:
+## What Is A Pattern?
+
+**Remember:** a pattern is a saved prompt.
+
+```bash
+forge pattern list
+forge run summarize < notes.md
+forge run debug < error.log
+```
+
+## What Is A Workflow?
+
+**Remember:** a workflow is a list of patterns.
+
+```bash
+forge workflow marketplace
+forge workflow install docs-pipeline
+forge workflow run docs-pipeline < README.md
+```
+
+## What Is An Agent?
+
+**Remember:** an agent is a role with a job.
+
+Examples:
+
+```bash
+forge agent build-app --goal "Build a tiny CLI"
+forge agent debug-project
+forge agent review-code
+```
+
+Built-in agents:
+
+- Planner
+- Researcher
+- Coder
+- Tester
+- Reviewer
+- Documenter
+
+## Use Ollama Instead
 
 ```toml
 provider = "ollama"
@@ -129,173 +153,31 @@ ollama pull llama3.2
 forge provider test ollama
 ```
 
-## Patterns
+## Safety Defaults
 
-Patterns are reusable YAML prompts:
-
-```bash
-forge run summarize < notes.md
-forge run explain --text "Rust ownership"
-forge chain summarize quiz flashcards < tutorial.md
-```
-
-Manage patterns:
-
-```bash
-forge pattern list
-forge pattern create release-notes
-forge pattern edit release-notes
-forge pattern install ./my-pattern.yaml
-forge pattern remove release-notes
-```
-
-## Workflows
-
-Workflows are YAML pipelines:
-
-```bash
-forge workflow list
-forge workflow marketplace
-forge workflow install docs-pipeline
-forge workflow run docs-pipeline < README.md
-```
-
-Example:
-
-```yaml
-name: bug-fix-pipeline
-description: Analyze, debug, fix, and review a bug report.
-steps:
-  - analyze
-  - debug
-  - fix
-  - review
-```
-
-## Agents
-
-```bash
-forge agent build-app --goal "Build a terminal Markdown summarizer"
-forge agent debug-project
-forge agent review-code
-```
-
-Agents receive project index context and pass outputs between roles:
-
-- Planner
-- Researcher
-- Coder
-- Tester
-- Reviewer
-- Documenter
-
-## Project Awareness
-
-Run inside a repository:
-
-```bash
-forge analyze
-forge explain-project
-forge architecture
-forge find-dead-code
-forge generate-docs
-```
-
-The project index includes:
-
-- files
-- extensions
-- manifests
-- line counts
-- SHA-256 hashes
-- symbol hints
-
-## Memory
-
-```bash
-forge remember "Prefer short terminal output."
-forge recall
-forge memory search terminal
-forge memory clear
-```
-
-Memory is stored in SQLite under `~/.forgeflow`.
-
-## Plugins
-
-```bash
-forge plugin scaffold my-plugin
-forge plugin validate ~/.forgeflow/plugins/my-plugin
-forge plugin list
-```
-
-Plugins can provide patterns, workflows, tools, agents, providers, workflow steps, and commands.
-
-## Development
-
-Run the full local check:
-
-```bash
-cargo fmt --check
-cargo clippy -- -D warnings
-cargo test
-```
-
-Useful smoke tests:
-
-```bash
-forge provider list
-forge workflow marketplace
-forge plugin scaffold smoke-plugin
-forge plugin validate ~/.forgeflow/plugins/smoke-plugin
-```
-
-## Repository Map
-
-```text
-src/
-  agents.rs      agent orchestration
-  cli.rs         clap command definitions
-  config.rs      TOML config and provider settings
-  memory.rs      SQLite memory
-  patterns.rs    Fabric-style pattern engine
-  plugins.rs     plugin SDK scaffolding and validation
-  project.rs     project indexing
-  providers.rs   streaming provider integrations
-  tools.rs       terminal tool framework
-  workflows.rs   YAML workflow engine
-docs/
-  ARCHITECTURE.md
-  RELEASE_READINESS_REPORT.md
-examples/
-  patterns/
-  workflows/
-```
-
-## Security
-
-Do not put raw API keys in public config files. Prefer environment references such as:
-
-```toml
-api_key = "${OPENAI_API_KEY}"
-```
-
-Report vulnerabilities privately using the process in [SECURITY.md](SECURITY.md).
-
-Dangerous tools are opt-in:
+**Remember:** dangerous tools are off by default.
 
 ```toml
 [tools]
 shell_enabled = false
 allow_write_outside_workspace = false
-max_search_file_bytes = 1048576
-
-[project]
-max_index_file_bytes = 1048576
 ```
 
-See [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) and [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
+Enable shell only if you know what you are doing:
+
+```toml
+[tools]
+shell_enabled = true
+```
+
+## Learn More
+
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Threat Model](docs/THREAT_MODEL.md)
+- [Contributing](CONTRIBUTING.md)
+- [Roadmap](ROADMAP.md)
 
 ## License
 
-FlowForge is released under the MIT License. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).

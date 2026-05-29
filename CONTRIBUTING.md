@@ -1,8 +1,16 @@
 # Contributing
 
-Thanks for helping improve FlowForge.
+**Remember:** small PRs are good PRs.
 
-## Local Setup
+## Setup
+
+Fast path:
+
+```bash
+cargo install --git https://github.com/FlowForge-dev/FlowForge
+```
+
+Repo path:
 
 ```bash
 git clone https://github.com/FlowForge-dev/FlowForge.git
@@ -11,9 +19,9 @@ cargo build
 cargo test
 ```
 
-## Before Opening A PR
+## Before You Push
 
-Run:
+Run all three:
 
 ```bash
 cargo fmt --check
@@ -21,42 +29,39 @@ cargo clippy -- -D warnings
 cargo test
 ```
 
-Keep changes focused. If you are changing provider behavior, add or update mocked streaming tests in `src/providers.rs`.
+## Project Rules
 
-## Project Principles
+- Terminal-first.
+- No web UI.
+- No Electron.
+- Keep providers behind `ProviderClient`.
+- Do not add random new providers.
+- Do not log secrets.
+- Keep changes small.
 
-- Terminal-first always.
-- No web UI, Electron, or desktop shell.
-- Keep provider integrations behind `ProviderClient`.
-- Do not add providers unless there is a strong maintainer-approved reason.
-- Prefer small, testable changes.
-- Avoid storing secrets in files.
+## Good First PRs
 
-## Commit Style
+- Fix docs.
+- Add tests.
+- Improve errors.
+- Improve examples.
+- Simplify setup.
 
-Use short, plain commit messages:
+## PR Checklist
 
-```text
-add provider health checks
-fix workflow install path
-document ollama setup
-```
-
-## Pull Request Checklist
-
-- The change is scoped.
+- The change is easy to explain.
 - Tests pass.
-- CLI behavior is documented when user-facing.
-- Security implications are called out.
-- New files are placed in the existing structure.
+- Docs changed if commands changed.
+- Security impact is mentioned.
 
-## Issue Reports
+## Bug Reports
 
-Include:
+Please include:
 
-- OS and shell
+- OS
+- shell
 - `forge --version`
 - command used
 - expected result
 - actual result
-- relevant config with secrets removed
+- config with secrets removed

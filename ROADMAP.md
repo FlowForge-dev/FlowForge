@@ -1,34 +1,39 @@
 # Roadmap
 
-FlowForge is intentionally terminal-first. The roadmap prioritizes trust, speed, and useful developer workflows over adding more providers.
+**Remember:** trust first, features second.
 
-## v0.1.x - Public Preview
+## Now
 
-- Improve provider error messages.
-- Add end-to-end workflow tests.
-- Add packaged binaries for Linux, macOS, and Windows.
-- Add shell completions.
-- Add threat-model-driven safety checks for tools and plugins.
+Make install easy.
 
-## v0.2.x - Workflow And Agent Reliability
+- Better docs
+- Better errors
+- More tests
+- Release binaries
 
-- Typed workflow steps.
-- Structured agent outputs.
-- Dry-run mode for workflows and agents.
-- Cost and call-count estimates before multi-step AI runs.
-- Better project index caching.
+## Next
 
-## v0.3.x - Plugin Trust Model
+Make workflows safer.
 
-- Plugin permissions.
-- Plugin lockfile.
-- Signed plugin releases.
-- Registry metadata validation.
+- Typed workflow steps
+- Dry runs
+- Permission prompts
+- Cost estimates
 
-## v1.0.0 - Stable CLI Contracts
+## Later
 
-- Stable command surface.
-- Stable config format.
-- Stable plugin manifest schema.
-- Stable workflow schema.
-- Documented migration policy.
+Make plugins trustworthy.
+
+- Plugin permissions
+- Signed plugins
+- Plugin lockfile
+- Safer marketplace
+
+## Stable 1.0
+
+Ship stable promises.
+
+- Stable commands
+- Stable config
+- Stable workflow format
+- Stable plugin format

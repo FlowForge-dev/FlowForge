@@ -1,28 +1,31 @@
 # Changelog
 
-All notable changes to FlowForge are documented here.
+**Remember:** this file tells you what changed.
 
 ## 0.1.0 - Unreleased
 
-Initial public preview.
+First public preview.
 
 ### Added
 
-- Terminal-first `forge` CLI.
-- Streaming provider integrations for OpenAI, Anthropic, Gemini, Ollama, and OpenRouter.
-- Fabric-style YAML patterns and pattern chaining.
-- YAML workflows and local workflow marketplace commands.
-- Project-aware agent orchestration.
-- SQLite-backed memory.
-- Plugin scaffold and manifest validation.
-- Project indexing with hashes, manifests, extensions, line counts, and symbol hints.
-- Launch docs, CI, security policy, contribution guide, and release readiness report.
+- `forge` terminal CLI.
+- OpenAI, Anthropic, Gemini, Ollama, and OpenRouter providers.
+- Streaming output.
+- Patterns.
+- Pattern chains.
+- Workflows.
+- Agents.
+- Project indexing.
+- SQLite memory.
+- Plugin scaffolding.
+- Local workflow marketplace.
+- CI, release workflow, and docs.
+- Beginner install scripts.
 
 ### Hardened
 
-- Shell tool is disabled by default and requires explicit config opt-in.
-- File writes refuse to leave the current workspace by default.
-- Plugin, pattern, and workflow names reject path traversal.
-- Search and project indexing skip oversized files by default.
-- Project indexing skips binary-looking files.
-- CLI integration tests cover critical first-run and safety behavior.
+- Shell tool is off by default.
+- File writes stay inside the workspace by default.
+- Plugin, pattern, and workflow names reject unsafe paths.
+- Large and binary files are skipped during indexing.
+- CLI safety tests were added.

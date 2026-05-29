@@ -1,57 +1,43 @@
 # Threat Model
 
-FlowForge is powerful because it connects AI providers, local files, shell commands, workflows, memory, and plugins. That also makes it security-sensitive.
+**Remember:** FlowForge is powerful, so it must be careful.
 
-## Assets
+## What We Protect
 
-- Provider API keys.
-- Source code and local project files.
-- Shell environment variables.
-- Persistent memory database.
-- Workflow and plugin files.
-- Model outputs that may contain private context.
+- API keys
+- source code
+- local files
+- shell environment
+- memory database
+- workflows
+- plugins
 
-## Trust Boundaries
+## Risky Areas
 
-| Boundary | Risk |
+| Area | Why it matters |
 | --- | --- |
-| User config | May contain secrets or dangerous tool settings. |
-| Provider APIs | Remote services receive prompt context. |
-| Plugins | Plugin code and binaries may be untrusted. |
-| Workflows | Workflow steps can trigger multiple model calls. |
-| Shell tool | Can execute arbitrary local commands when enabled. |
-| File tools | Can read or write local project files. |
-| Memory | Persists potentially sensitive notes and outputs. |
+| Providers | Your prompts leave your machine. |
+| Shell | Commands can change or delete files. |
+| File tools | Reads and writes touch your project. |
+| Plugins | Plugins may run code. |
+| Workflows | Workflows can chain many actions. |
+| Memory | Notes may contain private data. |
 
-## Attacker Models
+## Current Safety Defaults
 
-- A malicious plugin author.
-- A malicious workflow shared online.
-- A prompt injection inside repository content or logs.
-- A compromised provider key.
-- Accidental user misuse through copied shell snippets.
+- Shell is off by default.
+- File writes stay inside the workspace by default.
+- Unsafe names are blocked.
+- Large and binary files are skipped during indexing.
+- API keys can use environment variables.
 
-## Current Mitigations
+## Still Not Perfect
 
-- Shell execution is disabled by default.
-- File writes are limited to the current workspace by default.
-- Plugin, pattern, and workflow names reject path traversal.
-- Provider keys can be referenced through environment variables.
-- Project indexing skips oversized and binary-looking files.
-- CI runs format, clippy, and tests.
+- Plugins are not sandboxed yet.
+- Memory is not encrypted yet.
+- Workflow permissions are not complete yet.
+- Provider calls can cost money.
 
-## Known Gaps
+## Maintainer Rule
 
-- Plugins are not sandboxed.
-- Workflow steps are not permissioned.
-- Memory is not encrypted.
-- Provider calls do not estimate cost.
-- There is no signed marketplace.
-
-## Rules For Contributors
-
-- Treat every workflow and plugin as untrusted input.
-- Do not add new shell or file capabilities without a safety review.
-- Prefer opt-in behavior for dangerous actions.
-- Add tests for path handling and config behavior.
-- Never log raw provider keys.
+If a change touches shell, files, plugins, memory, or secrets, treat it as security-sensitive.

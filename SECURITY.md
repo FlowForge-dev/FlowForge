@@ -1,27 +1,47 @@
-# Security Policy
+# Security
 
-## Supported Versions
+**Remember:** FlowForge can touch files, API keys, AI providers, plugins, and shell commands.
 
-Until the first stable release, only the latest `main` branch is supported.
+## Report A Security Bug
 
-## Reporting A Vulnerability
+Do not open a public issue.
 
-Please do not open a public issue for security vulnerabilities.
+Use GitHub private vulnerability reporting when available:
 
-Email the maintainers or use GitHub private vulnerability reporting when enabled. Include:
+```text
+https://github.com/FlowForge-dev/FlowForge/security/advisories/new
+```
 
-- affected command or subsystem
-- steps to reproduce
-- impact
-- whether secrets, files, shell execution, or network access are involved
-- suggested fix if known
+Include:
 
-You should receive an initial response within 7 days.
+- what broke
+- how to reproduce it
+- what data is at risk
+- whether files, shell, plugins, memory, or API keys are involved
 
-## Security Expectations
+## Safe Defaults
 
-- Do not commit API keys or provider tokens.
-- Prefer `api_key = "${ENV_VAR}"` in config.
-- Treat plugins as executable code.
-- Review workflow files before running them from untrusted sources.
-- Be careful with `forge tool shell` and file write commands.
+- Shell is off by default.
+- File writes stay inside the workspace by default.
+- API keys should come from environment variables.
+- Plugins should be treated like executable code.
+
+## Safer Config
+
+Good:
+
+```toml
+api_key = "${OPENAI_API_KEY}"
+```
+
+Risky:
+
+```toml
+api_key = "sk-real-secret-here"
+```
+
+## Before Running Shared Workflows
+
+Read them first.
+
+If a workflow or plugin asks for shell access, slow down.

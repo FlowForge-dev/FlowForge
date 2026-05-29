@@ -1,8 +1,10 @@
-## Summary
+# Pull Request
 
-What changed?
+## What changed?
 
-## Validation
+One or two sentences.
+
+## Checks
 
 - [ ] `cargo fmt --check`
 - [ ] `cargo clippy -- -D warnings`
@@ -10,10 +12,7 @@ What changed?
 
 ## Safety
 
-- [ ] This does not introduce new shell/file/network behavior.
-- [ ] Any new command is documented.
-- [ ] Any new config is documented.
-
-## Notes
-
-Anything maintainers should pay special attention to?
+- [ ] No new secret logging.
+- [ ] No new unsafe file writes.
+- [ ] No new shell behavior.
+- [ ] Docs updated if commands changed.

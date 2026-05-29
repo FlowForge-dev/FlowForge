@@ -1,27 +1,24 @@
-# Code of Conduct
+# Code Of Conduct
 
-FlowForge follows the Contributor Covenant Code of Conduct.
+**Remember:** be useful, be kind, be direct.
 
-## Our Pledge
+## Do
 
-We pledge to make participation in this project a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, caste, color, religion, or sexual identity and orientation.
+- Help beginners.
+- Explain tradeoffs.
+- Stay technical.
+- Assume good intent.
+- Accept correction.
 
-## Expected Behavior
+## Do Not
 
-- Be respectful and direct.
-- Assume good intent, but accept corrections.
-- Give actionable feedback.
-- Keep technical disagreement focused on the work.
+- Harass people.
+- Post private information.
+- Attack people personally.
+- Derail issues or pull requests.
 
-## Unacceptable Behavior
+## Maintainer Action
 
-- Harassment, threats, or personal attacks.
-- Sexualized language or imagery.
-- Publishing private information without permission.
-- Sustained disruption of discussions or maintainer work.
+Maintainers may edit, hide, lock, or remove content that harms the project.
 
-## Enforcement
-
-Maintainers may remove comments, close issues, block users, or ban contributors whose behavior harms the project community.
-
-Report conduct issues privately to the maintainers listed in `SECURITY.md`.
+For private reports, use the contact path in [SECURITY.md](SECURITY.md).

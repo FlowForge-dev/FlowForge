@@ -1,24 +1,59 @@
 # Troubleshooting
 
-## `forge provider test openai` says the provider is not configured
+**Remember:** most problems are setup problems.
 
-Set the provider key as an environment variable and reference it in `~/.forgeflow/config.toml`.
+## `cargo` Is Missing
 
-```toml
-[providers.openai]
-api_key = "${OPENAI_API_KEY}"
+Use the binary installer first:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.sh | sh
+```
+
+Windows:
+
+```powershell
+irm https://raw.githubusercontent.com/FlowForge-dev/FlowForge/main/install.ps1 | iex
+```
+
+If you want to build from source, install Rust:
+
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+Windows: use [rustup.rs](https://rustup.rs/).
+
+## Provider Is Not Configured
+
+Set your key:
+
+```bash
+export OPENAI_API_KEY="sk-..."
 ```
 
 PowerShell:
 
 ```powershell
 $env:OPENAI_API_KEY = "sk-..."
+```
+
+Config:
+
+```toml
+[providers.openai]
+api_key = "${OPENAI_API_KEY}"
+```
+
+Test:
+
+```bash
 forge provider test openai
 ```
 
 ## Ollama Is Unreachable
 
-Start Ollama and make sure the configured host is correct.
+Start it:
 
 ```bash
 ollama serve
@@ -38,56 +73,44 @@ host = "http://localhost:11434"
 
 ## Shell Tool Is Disabled
 
-This is intentional. Enable it only if you understand the risk.
+Good. That is safer.
+
+Enable it only if needed:
 
 ```toml
 [tools]
 shell_enabled = true
 ```
 
-Then:
+## File Write Was Blocked
 
-```bash
-forge tool shell echo hello
-```
+FlowForge will not write outside your current folder by default.
 
-## File Write Is Refused Outside The Workspace
-
-By default, `forge tool write` will not write outside the current working directory.
-
-To opt in:
+To allow it:
 
 ```toml
 [tools]
 allow_write_outside_workspace = true
 ```
 
-## Provider Calls Are Slow Or Fail Mid-Stream
+## Scan Missed A Large File
 
-Tune timeout and retry settings:
+Large files are skipped by default.
 
-```toml
-timeout_secs = 180
-retries = 1
-```
-
-Retries can duplicate paid model calls, so keep this conservative.
-
-## Project Scan Is Missing Large Files
-
-FlowForge skips files larger than 1 MiB by default when indexing/searching.
+Raise the limit:
 
 ```toml
 [project]
 max_index_file_bytes = 2097152
-
-[tools]
-max_search_file_bytes = 2097152
 ```
 
-## Invalid Plugin, Pattern, Or Workflow Name
+## Invalid Name
 
-Names must use only letters, numbers, hyphen, or underscore.
+Names can use:
+
+```text
+letters numbers - _
+```
 
 Good:
 
@@ -99,6 +122,6 @@ docs_pipeline
 Bad:
 
 ```text
-../plugin
+../secret
 my/plugin
 ```
