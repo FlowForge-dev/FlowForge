@@ -129,40 +129,66 @@ forge run action-items < meeting.txt
 forge run debug < error.log
 ```
 
-Useful built-in patterns:
+## Pattern Commands
 
-```text
-distill          turn messy input into a knowledge brief
-key-points       pull out the essentials
-insight-map      map ideas and implications
-action-items     extract tasks
-decision-brief   make a decision memo
-study-notes      make beginner notes
-claim-check      separate claims from evidence
-counterpoints    stress-test ideas
-quote-bank       pull short useful quotes
-question-set     create good questions
-checklist        make a checklist
-meeting-brief    summarize meetings
-research-brief   organize research notes
-newbie-explain   explain for beginners
-risks            find risks and mitigations
-next-steps       suggest what to do next
-content-ideas    create honest content angles
-```
+**Remember:** every pattern runs the same way: `forge run NAME < file`.
+
+| Pattern | Use it for | Example |
+| --- | --- | --- |
+| `action-items` | Turn notes into tasks | `forge run action-items < meeting.txt` |
+| `analyze` | Analyze problem context | `forge run analyze < context.md` |
+| `architecture` | Explain system design | `forge run architecture < design.md` |
+| `checklist` | Make a practical checklist | `forge run checklist < guide.md` |
+| `claim-check` | Separate claims from evidence | `forge run claim-check < article.md` |
+| `concept-map` | Map concepts and relationships | `forge run concept-map < notes.md` |
+| `content-ideas` | Create honest content angles | `forge run content-ideas < transcript.txt` |
+| `counterpoints` | Stress-test an idea | `forge run counterpoints < proposal.md` |
+| `debug` | Find likely causes in errors | `forge run debug < error.log` |
+| `decision-brief` | Make a decision memo | `forge run decision-brief < options.md` |
+| `distill` | Extract useful knowledge | `forge run distill < notes.md` |
+| `explain` | Explain a concept or code | `forge run explain --text "Rust ownership"` |
+| `fix` | Propose a fix plan | `forge run fix < bug-report.md` |
+| `flashcards` | Make study flashcards | `forge run flashcards < lesson.md` |
+| `insight-map` | Map ideas and tradeoffs | `forge run insight-map < research.md` |
+| `key-points` | Pull essentials only | `forge run key-points < article.md` |
+| `meeting-brief` | Summarize a meeting | `forge run meeting-brief < transcript.txt` |
+| `newbie-explain` | Explain for a beginner | `forge run newbie-explain --text "Docker containers"` |
+| `next-steps` | Pick the next moves | `forge run next-steps < plan.md` |
+| `question-set` | Create good questions | `forge run question-set < notes.md` |
+| `quiz` | Make a short quiz | `forge run quiz < lesson.md` |
+| `quote-bank` | Pull useful short quotes | `forge run quote-bank < source.txt` |
+| `refactor` | Suggest safe refactors | `forge run refactor < code.rs` |
+| `research-brief` | Organize research notes | `forge run research-brief < research.md` |
+| `review` | Review risks and gaps | `forge run review < solution.md` |
+| `risks` | Find risks and mitigations | `forge run risks < proposal.md` |
+| `study-notes` | Make beginner notes | `forge run study-notes < article.md` |
+| `summarize` | Summarize text | `forge run summarize < README.md` |
 
 ## What Is A Workflow?
 
 **Remember:** a workflow is a list of patterns.
 
+## Workflow Commands
+
+**Remember:** every workflow runs the same way: `forge workflow run NAME < file`.
+
+| Workflow | Steps | Example |
+| --- | --- | --- |
+| `bug-fix-pipeline` | `analyze -> debug -> fix -> review` | `forge workflow run bug-fix-pipeline < bug-report.md` |
+| `content-pipeline` | `distill -> quote-bank -> content-ideas` | `forge workflow run content-pipeline < transcript.txt` |
+| `decision-pipeline` | `key-points -> decision-brief -> risks -> counterpoints` | `forge workflow run decision-pipeline < notes.md` |
+| `docs-pipeline` | `summarize -> architecture -> explain` | `forge workflow run docs-pipeline < README.md` |
+| `knowledge-pipeline` | `distill -> insight-map -> action-items -> next-steps` | `forge workflow run knowledge-pipeline < notes.md` |
+| `study-pipeline` | `newbie-explain -> study-notes -> question-set -> flashcards` | `forge workflow run study-pipeline < article.md` |
+
+More workflow commands:
+
 ```bash
+forge workflow list
 forge workflow marketplace
-forge workflow run knowledge-pipeline < notes.md
-forge workflow run study-pipeline < article.md
-forge workflow run decision-pipeline < notes.md
-forge workflow run content-pipeline < transcript.txt
 forge workflow install docs-pipeline
-forge workflow run docs-pipeline < README.md
+forge workflow create my-pipeline
+forge workflow edit my-pipeline
 ```
 
 ## What Is An Agent?
