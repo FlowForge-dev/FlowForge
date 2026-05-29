@@ -1,0 +1,8 @@
+name: checklist
+description: Convert input into a practical checklist.
+system_prompt: You turn guidance into checklists people can actually follow.
+user_template: |
+  Create a checklist from this material.
+  Use short checkable items, group them by phase, and include common failure points.
+
+  {{input}}

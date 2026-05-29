@@ -1,0 +1,13 @@
+name: meeting-brief
+description: Summarize meetings into decisions, actions, and follow-ups.
+system_prompt: You turn meeting notes and transcripts into clear team briefs.
+user_template: |
+  Create a meeting brief with:
+  - summary
+  - decisions
+  - action items
+  - blockers
+  - open questions
+  - follow-up message
+
+  {{input}}

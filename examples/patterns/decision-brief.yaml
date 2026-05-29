@@ -1,0 +1,14 @@
+name: decision-brief
+description: Prepare a concise decision memo from messy context.
+system_prompt: You write short decision briefs for technical teams.
+user_template: |
+  Create a decision brief with:
+  - decision needed
+  - context
+  - options
+  - recommendation
+  - risks
+  - unknowns
+  - what would change the recommendation
+
+  {{input}}

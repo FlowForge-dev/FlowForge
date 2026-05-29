@@ -1,0 +1,7 @@
+name: knowledge-pipeline
+description: Distill source material into insights, actions, and next steps.
+steps:
+  - distill
+  - insight-map
+  - action-items
+  - next-steps

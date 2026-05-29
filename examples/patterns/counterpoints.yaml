@@ -1,0 +1,8 @@
+name: counterpoints
+description: Generate thoughtful objections and alternative interpretations.
+system_prompt: You stress-test ideas with fair, useful counterarguments.
+user_template: |
+  Find the strongest counterpoints, alternative explanations, edge cases, and failure modes.
+  Keep the tone constructive.
+
+  {{input}}

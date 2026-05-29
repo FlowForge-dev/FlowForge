@@ -1,0 +1,9 @@
+name: action-items
+description: Turn input into concrete tasks with owners and priority hints.
+system_prompt: You turn unstructured notes into concrete execution tasks.
+user_template: |
+  Extract action items.
+  For each item include task, why it matters, suggested owner if obvious, priority, and dependency.
+  If no action exists, say so plainly.
+
+  {{input}}

@@ -71,6 +71,29 @@ user_template: |
   {{input}}
 ```
 
+FlowForge ships a practical pattern pack:
+
+```text
+distill
+key-points
+insight-map
+action-items
+decision-brief
+study-notes
+concept-map
+claim-check
+counterpoints
+quote-bank
+question-set
+checklist
+meeting-brief
+research-brief
+newbie-explain
+risks
+next-steps
+content-ideas
+```
+
 ## Workflow
 
 **Remember:** workflow = list of steps.
@@ -81,6 +104,15 @@ steps:
   - summarize
   - architecture
   - explain
+```
+
+Demo workflows:
+
+```text
+knowledge-pipeline
+study-pipeline
+decision-pipeline
+content-pipeline
 ```
 
 ## Agent

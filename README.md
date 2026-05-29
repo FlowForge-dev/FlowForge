@@ -94,6 +94,7 @@ Memorize these:
 ```bash
 forge chat
 forge run summarize < README.md
+forge run distill < notes.md
 forge run explain --text "Rust ownership"
 forge explain-project
 forge agent debug-project
@@ -105,10 +106,15 @@ forge agent debug-project
 | --- | --- |
 | Chat | `forge chat` |
 | Summarize text | `forge run summarize < file.md` |
+| Extract useful ideas | `forge run distill < file.md` |
+| Get action items | `forge run action-items < notes.md` |
+| Make study notes | `forge run study-notes < article.md` |
+| Build a decision memo | `forge run decision-brief < notes.md` |
 | Explain something | `forge run explain --text "topic"` |
 | Chain prompts | `forge chain summarize explain < file.md` |
 | Inspect a project | `forge explain-project` |
 | Debug a project | `forge agent debug-project` |
+| Run knowledge workflow | `forge workflow run knowledge-pipeline < notes.md` |
 | Run a workflow | `forge workflow run docs-pipeline < README.md` |
 | Save a note | `forge remember "Use short output"` |
 | Search memory | `forge memory search short` |
@@ -121,7 +127,31 @@ forge agent debug-project
 ```bash
 forge pattern list
 forge run summarize < notes.md
+forge run distill < notes.md
+forge run action-items < meeting.txt
 forge run debug < error.log
+```
+
+Useful built-in patterns:
+
+```text
+distill          turn messy input into a knowledge brief
+key-points       pull out the essentials
+insight-map      map ideas and implications
+action-items     extract tasks
+decision-brief   make a decision memo
+study-notes      make beginner notes
+claim-check      separate claims from evidence
+counterpoints    stress-test ideas
+quote-bank       pull short useful quotes
+question-set     create good questions
+checklist        make a checklist
+meeting-brief    summarize meetings
+research-brief   organize research notes
+newbie-explain   explain for beginners
+risks            find risks and mitigations
+next-steps       suggest what to do next
+content-ideas    create honest content angles
 ```
 
 ## What Is A Workflow?
@@ -130,6 +160,10 @@ forge run debug < error.log
 
 ```bash
 forge workflow marketplace
+forge workflow run knowledge-pipeline < notes.md
+forge workflow run study-pipeline < article.md
+forge workflow run decision-pipeline < notes.md
+forge workflow run content-pipeline < transcript.txt
 forge workflow install docs-pipeline
 forge workflow run docs-pipeline < README.md
 ```

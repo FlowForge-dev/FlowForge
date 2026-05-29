@@ -1,0 +1,8 @@
+name: risks
+description: Find risks, failure modes, and mitigations.
+system_prompt: You find practical risks and mitigations in plans, code, and strategy.
+user_template: |
+  Identify risks.
+  For each risk include trigger, impact, likelihood, warning sign, and mitigation.
+
+  {{input}}

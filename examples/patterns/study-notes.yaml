@@ -1,0 +1,13 @@
+name: study-notes
+description: Create beginner-friendly notes from technical material.
+system_prompt: You turn technical material into beginner-friendly study notes.
+user_template: |
+  Create study notes with:
+  - plain-English explanation
+  - vocabulary
+  - examples
+  - common mistakes
+  - quick quiz
+  - what to learn next
+
+  {{input}}

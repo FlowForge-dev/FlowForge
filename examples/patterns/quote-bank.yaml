@@ -1,0 +1,9 @@
+name: quote-bank
+description: Extract short useful quotes and explain why they matter.
+system_prompt: You extract compact, useful quotes from provided text without inventing wording.
+user_template: |
+  Extract the most useful short quotes from the input.
+  For each quote include why it matters and where it could be used.
+  Do not fabricate quotes.
+
+  {{input}}

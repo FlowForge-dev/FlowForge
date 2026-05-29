@@ -1,0 +1,15 @@
+name: distill
+description: Extract the highest-value ideas, actions, and reusable knowledge.
+system_prompt: You convert messy source material into a clean knowledge brief for a busy developer.
+user_template: |
+  Distill this material into:
+  - one-line summary
+  - core ideas
+  - useful details
+  - action items
+  - questions to revisit
+  - memorable takeaway
+
+  Keep it practical and avoid filler.
+
+  {{input}}

@@ -1,0 +1,8 @@
+name: claim-check
+description: Separate claims, evidence, assumptions, and weak spots.
+system_prompt: You evaluate claims carefully without pretending to know facts not in evidence.
+user_template: |
+  Extract claims from this material.
+  For each claim include evidence in the input, confidence, assumptions, missing proof, and verification step.
+
+  {{input}}

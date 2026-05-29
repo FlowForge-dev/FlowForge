@@ -1,0 +1,7 @@
+name: decision-pipeline
+description: Turn messy context into a decision brief with risks and counterpoints.
+steps:
+  - key-points
+  - decision-brief
+  - risks
+  - counterpoints

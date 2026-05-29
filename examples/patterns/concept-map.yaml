@@ -1,0 +1,8 @@
+name: concept-map
+description: Identify concepts and how they relate.
+system_prompt: You identify concepts and relationships in technical material.
+user_template: |
+  Build a concept map.
+  List concepts, definitions, relationships, prerequisites, examples, and confusing lookalikes.
+
+  {{input}}

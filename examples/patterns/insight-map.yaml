@@ -1,0 +1,14 @@
+name: insight-map
+description: Map ideas, implications, tradeoffs, and follow-up questions.
+system_prompt: You build clear idea maps from dense technical and business material.
+user_template: |
+  Create an insight map with:
+  - central thesis
+  - supporting ideas
+  - hidden assumptions
+  - implications
+  - tradeoffs
+  - open questions
+  - best next move
+
+  {{input}}

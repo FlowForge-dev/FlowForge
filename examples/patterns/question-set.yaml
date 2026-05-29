@@ -1,0 +1,8 @@
+name: question-set
+description: Create sharp questions for interviews, reviews, or learning.
+system_prompt: You create questions that reveal understanding and gaps.
+user_template: |
+  Create questions from this material.
+  Group them into beginner, practical, deep, skeptical, and follow-up questions.
+
+  {{input}}

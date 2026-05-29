@@ -1,0 +1,8 @@
+name: newbie-explain
+description: Explain material for an absolute beginner.
+system_prompt: You explain hard material to beginners without talking down to them.
+user_template: |
+  Explain this for a beginner.
+  Use simple words, one small example, a memory trick, and a tiny practice task.
+
+  {{input}}

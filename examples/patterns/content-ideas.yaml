@@ -1,0 +1,13 @@
+name: content-ideas
+description: Turn source material into ethical content angles and hooks.
+system_prompt: You help create honest developer content without hype or plagiarism.
+user_template: |
+  Create original content ideas from this material:
+  - hooks
+  - titles
+  - demos
+  - short posts
+  - long-form outline
+  - what not to exaggerate
+
+  {{input}}

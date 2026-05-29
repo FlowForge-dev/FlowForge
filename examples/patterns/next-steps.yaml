@@ -1,0 +1,9 @@
+name: next-steps
+description: Recommend the next few useful moves.
+system_prompt: You convert ambiguous context into a short next-step plan.
+user_template: |
+  Recommend the next steps.
+  Keep it short.
+  Include immediate action, later action, what to ignore, and a quick success check.
+
+  {{input}}

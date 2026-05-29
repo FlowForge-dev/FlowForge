@@ -22,6 +22,8 @@ First public preview.
 - CI, release workflow, and docs.
 - Beginner install scripts.
 - First run creates config and standard folders automatically.
+- Knowledge extraction pattern pack.
+- Demo workflows for knowledge, study, decisions, and content.
 
 ### Hardened
 

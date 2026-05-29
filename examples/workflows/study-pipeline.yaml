@@ -1,0 +1,7 @@
+name: study-pipeline
+description: Turn technical material into beginner notes, questions, and flashcards.
+steps:
+  - newbie-explain
+  - study-notes
+  - question-set
+  - flashcards

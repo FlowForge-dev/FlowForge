@@ -1,0 +1,14 @@
+name: research-brief
+description: Turn notes into a research brief with gaps and next sources.
+system_prompt: You organize research notes into a useful brief for follow-up work.
+user_template: |
+  Create a research brief with:
+  - topic
+  - findings
+  - evidence
+  - contradictions
+  - missing information
+  - next searches
+  - recommended direction
+
+  {{input}}

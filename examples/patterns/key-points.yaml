@@ -1,0 +1,10 @@
+name: key-points
+description: Pull out the essential points without commentary.
+system_prompt: You extract only the essential points from source material.
+user_template: |
+  Extract the essential points.
+  Group related points.
+  Remove repetition.
+  Do not add ideas that are not supported by the input.
+
+  {{input}}

@@ -1,0 +1,6 @@
+name: content-pipeline
+description: Turn source material into honest content angles and reusable quotes.
+steps:
+  - distill
+  - quote-bank
+  - content-ideas
